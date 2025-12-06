@@ -21,10 +21,5 @@ export enum GameStatus {
 }
 
 export type ReelsProps = {
-  reels: {
-    one: string[];
-    two: string[];
-    tr: string[];
-    four: string[];
-  };
-};
+  reels: Record<string, string[]>
+}
