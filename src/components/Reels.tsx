@@ -18,22 +18,48 @@ export const Reels = ({ reels }: ReelsProps) => {
   const trututuSize = isBigMachine ? 64 : 36;
 
   useEffect(() => {
+    const playSound = () => {
+      const audio = new Audio('/sound/reel.wav');
+      audio.volume = 0.3;
+      audio.play();
+    };
+
     const setupAnimation = (arr: string[], controls: LegacyAnimationControls, index: number) => {
       if (!arr.length) return;
+
+      const duration = 3 + index;
       const lastIndex = arr.length - 1;
-      const itemHeight = trututuSize + 20; // + гап
+      const itemHeight = trututuSize + 20;
+
+      // старт позиції
       controls.set({ y: -(lastIndex * itemHeight) });
+
+      // запускаємо тікання
+      let timer: NodeJS.Timeout;
+      const tickInterval = duration / arr.length * 1000; // ms
+
+      let i = 0;
+      timer = setInterval(() => {
+        playSound();
+        i++;
+        if (i >= arr.length) clearInterval(timer);
+      }, tickInterval);
+
+      // сама анімація
       controls.start({
         y: 0,
-        transition: { duration: 3 + index, ease: "easeOut" },
+        transition: { duration, ease: "easeOut" },
       });
-    }
+
+      return () => clearInterval(timer);
+    };
 
     setupAnimation(reels.one, controlsOne, 0);
     setupAnimation(reels.two, controlsTwo, 1);
     setupAnimation(reels.tr, controlsTr, 2);
     setupAnimation(reels.four, controlsFour, 3);
   }, [reels]);
+
 
   const reelMap = [
     { key: 'one', items: reels.one, controls: controlsOne },

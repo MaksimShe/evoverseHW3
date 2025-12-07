@@ -6,12 +6,12 @@ import { FooterBg } from "@/components/FooterBg";
 import { useSlotStore } from "@/store/useSlotStore";
 import { GameStatus } from "@/types";
 import { LoseModal } from "@/components/LoseModal";
-import {WinModal} from "@/components/WinModal";
+import { WinModal } from "@/components/WinModal";
 
 export const MainApp = () => {
   const { gameStatus } = useSlotStore();
   return (
-    <div className="flex flex-col min-h-screen bg-[#DAF3A6] -z-50 ">
+    <div className="flex flex-col min-h-screen bg-[#DAF3A6] -z-50 overflow-hidden">
       {
         gameStatus === GameStatus.lose &&
         <LoseModal />

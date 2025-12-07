@@ -9,7 +9,7 @@ export const LoseModal = () => {
   const { bet } = useSlotStore();
 
   return (
-     <section className="absolute top-0 left-0 h-screen w-screen z-50 flex justify-center items-center ">
+     <section className="absolute top-0 left-0 h-screen w-screen z-50 flex justify-center items-center">
        <div className="h-screen w-screen bg-[#BA562B] absolute opacity-35" />
        <div className="relative">
          <span
