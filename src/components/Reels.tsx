@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useAnimation } from "framer-motion";
+import {LegacyAnimationControls, motion, useAnimation} from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
 import { ReelsProps } from "@/types";
@@ -28,7 +28,8 @@ export const Reels = ({ reels }: ReelsProps) => {
       audio.play();
     };
 
-    const setupAnimation = (arr, controls, index) => {
+    const setupAnimation =
+      (arr: string[], controls: LegacyAnimationControls, index: number) => {
       if (!arr.length) return () => {};
 
       const duration = 3 + index;
