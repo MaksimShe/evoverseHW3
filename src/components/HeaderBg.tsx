@@ -2,6 +2,8 @@
 
 import { getBackground } from "@/utils/getBackground";
 import Image from "next/image";
+import {useSlotStore} from "@/store/useSlotStore";
+import cn from "classnames";
 
 export const HeaderBg = () => {
   const bgImg = {
@@ -10,6 +12,8 @@ export const HeaderBg = () => {
     goBack: getBackground("coin"),
     aboutBtn: getBackground("aboutBtn"),
   }
+  const { hasSound, changeSound } = useSlotStore();
+
   return (
     <header className="w-full relative flex justify-center h-16">
       <div className="absolute inset-0">
@@ -21,7 +25,14 @@ export const HeaderBg = () => {
         />
       </div>
       <div className="absolute h-28 flex gap-8 items-center">
-        <Image src={bgImg.goBack} alt="Go Back" width={64} height={64} className="object-contain h-16 w-16 hover:scale-110" />
+        <Image
+          src={bgImg.goBack}
+          alt="Go Back"
+          width={64}
+          height={64}
+          className={cn("object-contain h-16 w-16 hover:scale-110", {'opacity-45' : !hasSound})}
+          onClick={changeSound}
+        />
         <div className="flex justify-center items-center">
           <Image src={bgImg.headerName} alt="Header Name" width={340} height={69} className="object-contain" />
           <h2

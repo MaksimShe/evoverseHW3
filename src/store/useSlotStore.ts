@@ -20,5 +20,8 @@ export const useSlotStore = create<BalanceState>()(
 
       lastWinSum: 0,
       setLastWinSum: (lastWinSum: number) => set({ lastWinSum }),
+
+      hasSound: true,
+      changeSound: () => set((state) => ({ hasSound: !state.hasSound })),
     })
 );

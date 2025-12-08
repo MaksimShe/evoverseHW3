@@ -7,6 +7,7 @@ import { ReelsProps } from "@/types";
 import cn from "classnames";
 import { useMediaQuery } from "react-responsive";
 import { widthChangeMachineSize } from "@/components/SlotMachine";
+import { useSlotStore } from "@/store/useSlotStore";
 
 export const Reels = ({ reels }: ReelsProps) => {
   const controlsOne = useAnimation();
@@ -16,36 +17,35 @@ export const Reels = ({ reels }: ReelsProps) => {
 
   const isBigMachine = useMediaQuery({ minWidth: widthChangeMachineSize });
   const trututuSize = isBigMachine ? 64 : 36;
+  const { hasSound } = useSlotStore();
 
   useEffect(() => {
     const playSound = () => {
+      if (!hasSound) return;
+
       const audio = new Audio('/sound/reel.wav');
       audio.volume = 0.3;
       audio.play();
     };
 
-    const setupAnimation = (arr: string[], controls: LegacyAnimationControls, index: number) => {
-      if (!arr.length) return;
+    const setupAnimation = (arr, controls, index) => {
+      if (!arr.length) return () => {};
 
       const duration = 3 + index;
       const lastIndex = arr.length - 1;
       const itemHeight = trututuSize + 20;
 
-      // старт позиції
       controls.set({ y: -(lastIndex * itemHeight) });
 
-      // запускаємо тікання
-      let timer: NodeJS.Timeout;
-      const tickInterval = duration / arr.length * 1000; // ms
+      const tickInterval = (duration / arr.length) * 1000;
 
       let i = 0;
-      timer = setInterval(() => {
+      const timer = setInterval(() => {
         playSound();
         i++;
         if (i >= arr.length) clearInterval(timer);
       }, tickInterval);
 
-      // сама анімація
       controls.start({
         y: 0,
         transition: { duration, ease: "easeOut" },
@@ -54,11 +54,18 @@ export const Reels = ({ reels }: ReelsProps) => {
       return () => clearInterval(timer);
     };
 
-    setupAnimation(reels.one, controlsOne, 0);
-    setupAnimation(reels.two, controlsTwo, 1);
-    setupAnimation(reels.tr, controlsTr, 2);
-    setupAnimation(reels.four, controlsFour, 3);
-  }, [reels]);
+    const cleanups = [
+      setupAnimation(reels.one, controlsOne, 0),
+      setupAnimation(reels.two, controlsTwo, 1),
+      setupAnimation(reels.tr, controlsTr, 2),
+      setupAnimation(reels.four, controlsFour, 3),
+    ];
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup && cleanup());
+    };
+  }, [reels, hasSound]);
+
 
 
   const reelMap = [

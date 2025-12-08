@@ -22,7 +22,7 @@ export const Balance = () => {
       <h2
         className="font-[PocketMonk] min-[440px]:text-7xl text-4xl z-10 text-[#FFC434] drop-shadow-[0_4.4px_1.4px_rgba(59,29,26)]"
       >
-        Jackpot
+        Balance
       </h2>
       <div className="mt-4 z-10 flex gap-4">
         <Image src={moneyIcon} alt="Money" height={24} width={24} className="h-6 w-6"/>

@@ -11,6 +11,9 @@ export  interface BalanceState {
 
   lastWinSum: number;
   setLastWinSum: (lastWinSum: number) => void;
+
+  hasSound: boolean;
+  changeSound: () => void;
 }
 
 export enum GameStatus {
