@@ -1,6 +1,6 @@
 'use client';
 
-import { LegacyAnimationControls, motion, useAnimation } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
 import { ReelsProps } from "@/types";
@@ -64,7 +64,7 @@ export const Reels = ({ reels }: ReelsProps) => {
     return () => {
       cleanups.forEach((cleanup) => cleanup && cleanup());
     };
-  }, [reels, hasSound]);
+  }, [reels]);
 
 
 

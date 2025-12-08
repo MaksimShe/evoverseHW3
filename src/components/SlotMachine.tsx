@@ -11,11 +11,14 @@ import { calculateWin } from "@/utils/calculateWin";
 import { useSlotLogic } from "@/hooks/useSlotLogic";
 import cn from "classnames";
 import { useMediaQuery } from "react-responsive";
+import {symbols} from "@/utils/symbols";
 
 export const widthChangeMachineSize = 440;
 
 export const SlotMachine = () => {
-  const [slot, setSlot] = useState<{[key: string]: string[]}>({one: [], two: [], tr: [], four: []});
+  const [slot, setSlot] = useState<{[key: string]: string[]}>(
+    {one: [symbols.seven], two: [symbols.seven], tr: [symbols.seven], four: [symbols.seven]}
+  );
 
   const { gameStatus, bet } = useSlotStore();
   const { startGame } = useSlotLogic();
@@ -48,12 +51,11 @@ export const SlotMachine = () => {
   return (
     <section>
       <div className="relative">
-        {
-          gameStatus !== GameStatus.disabled &&
+
           <div className="absolute left-[11%] top-[35.8%]">
             <Reels reels={slot} />
           </div>
-        }
+
 
         <Image
           src={slotImg.slotMachine}
