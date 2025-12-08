@@ -51,12 +51,9 @@ export const SlotMachine = () => {
   return (
     <section>
       <div className="relative">
-
-          <div className="absolute left-[11%] top-[35.8%]">
-            <Reels reels={slot} />
-          </div>
-
-
+        <div className="absolute left-[11%] top-[35.8%]">
+          <Reels reels={slot} />
+        </div>
         <Image
           src={slotImg.slotMachine}
           alt='slot machine'
